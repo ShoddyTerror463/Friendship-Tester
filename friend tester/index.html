@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Friendship Tester</title>
+    <style>
+      body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 40px;
+        color: #FF69B4;
+        margin-top: 50px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 500px;
+        margin: 0 auto;
+      }
+
+      label {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      input {
+        padding: 10px;
+        font-size: 20px;
+        border-radius: 5px;
+        border: none;
+        margin-bottom: 20px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 20px;
+        background-color: #FF69B4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #FFB6C1;
+      }
+
+      #result {
+        font-size: 30px;
+        margin-top: 50px;
+        text-align: center;
+        color: #FF69B4;
+        font-weight: bold;
+      }
+      #history {
+        margin-top: 50px;
+      }
+
+      #history h2 {
+        font-size: 30px;
+        color: #FF69B4;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #history ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        width: 500px;
+      }
+
+      #history li {
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #history li span {
+        font-size: 20px;
+        color: #FF69B4;
+      }
+
+      #history li button {
+        background-color: #FF69B4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      #history li button:hover {
+        background-color: #FFB6C1;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Friendship Tester</h1>
+
+    <form>
+      <label for="name1">Name 1:</label>
+      <input type="text" id="name1" name="name1" placeholder="Enter your name" required>
+
+      <label for="name2">Name 2:</label>
+      <input type="text" id="name2" name="name2" placeholder="Enter your friend's name" required>
+
+      <button type="submit">Test Friendship</button>
+    </form>
+
+    <div id="result"></div>
+
+    
+    <script>
+        const form = document.querySelector('form');
+        const result = document.querySelector('#result');
+        const historyList = document.querySelector('#history ul');
+      
+        // jokes for different friendship scores
+        const jokes = {
+          0: "Wow, it looks like you're sworn enemies!",
+          10: "I think you two should work on your relationship.",
+          20: "Looks like you two have a long way to go.",
+          30: "Well, at least you're not total strangers.",
+          40: "You're getting there, but there's still room for improvement.",
+          50: "Hey, you two are halfway to being besties!",
+          60: "You guys are on your way to being great friends!",
+          70: "You two are practically joined at the hip!",
+          80: "Wow, you two are definitely best friends forever!",
+          90: "You guys are practically inseparable!",
+          100: "You two are the epitome of friendship! Congrats!"
+        };
+      
+        // Event listener for form submission
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+      
+          const name1 = document.querySelector('#name1').value.toLowerCase().trim();
+          const name2 = document.querySelector('#name2').value.toLowerCase().trim();
+      
+          let score = 0;
+      
+          if ((name1 === 'samee' && name2 === 'evie') || (name1 === 'evie' && name2 === 'samee')) {
+            score = 200;
+          } else {
+            for (let i = 0; i < name1.length; i++) {
+              score += name2.indexOf(name1[i]) + 1;
+            }
+      
+            for (let i = 0; i < name2.length; i++) {
+              score += name1.indexOf(name2[i]) + 1;
+            }
+      
+            score = score % 101;
+          }
+      
+          result.textContent = `Friendship Score: ${score}%`;
+      
+          // Display a joke based on the friendship score
+          let joke;
+          if (score < 10) {
+            joke = "Wow, it looks like you're sworn enemies!";
+          } else if (score < 20) {
+            joke = "I think you two should work on your relationship.";
+          } else if (score < 30) {
+            joke = "Looks like you two have a long way to go.";
+          } else if (score < 40) {
+            joke = "Well, at least you're not total strangers.";
+          } else if (score < 50) {
+            joke = "You're getting there, but there's still room for improvement.";
+          } else if (score < 60) {
+            joke = "Hey, you two are halfway to being besties!";
+          } else if (score < 70) {
+            joke = "You guys are on your way to being great friends!";
+          } else if (score < 80) {
+            joke = "You two are practically joined at the hip!";
+          } else if (score < 90) {
+            joke = "Wow, you two are definitely best friends forever!";
+          } else if (score < 100) {
+            joke = "You guys are practically inseparable!";
+          } else {
+            joke = "You two are the epitome of friendship! Congrats!";
+          }
+      
+          const jokeElement = document.createElement('p');
+          jokeElement.textContent = joke;
+          result.appendChild(jokeElement);
+      
+          // Add the result to the history list
+          const li = document.createElement('li');
+         
+      
+          const span = document.createElement('span');
+          const button = document.createElement('button');
+  
+          span.textContent = `${name1} and ${name2}: ${score}%`;
+          button.textContent
+
+  li.appendChild(span);
+  li.appendChild(button);
+
+  historyList.appendChild(li);
+
+  // Display the history section
+  const history = document.getElementById('history');
+  history.style.display = 'block';
+
+  // Event listener for delete button
+  button.addEventListener('click', () => {
+    historyList.removeChild(li);
+  });
+});
+
+      </script>
+      
+    <h5>happy birthday Evie</h5>
+    <a href="https://www.snapchat.com/add/yourusername">
+        <img src="snapchat.jpeg" alt="Add me on Snapchat" width="50" height="50">
+      </a>   <h5>>share to snapchat</h5>
+      
+      
+      
+  </body>
+</html>
+
+
